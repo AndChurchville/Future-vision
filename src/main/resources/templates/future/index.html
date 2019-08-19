@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<p th:unless="${client} and ${client.size()}">No Clients Yet :(</p>
+
+
+
+<table class="table">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Last Visit</th>
+        <th>Future Visit</th>
+    </tr>
+
+    <tr th:each="client : ${clients}">
+        <td th:text="${client.firstname}"></td>
+        <td th:text="${client.lastname}"></td>
+        <td th:text="${client.lastvisit}"></td>
+    </tr>
+</table>
+
+<a href="/future/add">Add Clients</a> |
+<a href="/future/remove">Remove Clients</a>
+</body>
+</html>

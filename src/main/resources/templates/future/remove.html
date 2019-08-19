@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="post">
+    <label th:for="clientId"></label>
+        <select name="clientId">
+            <option th:each="client : *{clients}"
+                    th:text = "${client.firstname}"
+                    th:value = "${client.id}"></option>
+        </select>
+        <br />
+    </div>
+
+    <input type="submit" value="Remove Client" />
+
+</form>
+
+</body>
+</html>
