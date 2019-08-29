@@ -2,9 +2,7 @@ package liftoffproject.futurevision.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -14,8 +12,9 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Client {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotNull
@@ -26,20 +25,23 @@ public class Client {
     @Size(min=3, max=55)
     private String lastname;
 
-    @NotNull
-    @DateTimeFormat(pattern = "MM-dd-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastvisit;
 
-    @NotNull
-    @DateTimeFormat(pattern = "MM-dd-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate futurevisit;
 
-    public Client(String firstname, String lastname, LocalDate lastvisit, LocalDate futurevisit) {
+
+
+
+
+    public Client(String firstname, String lastname, LocalDate lastvisit) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.lastvisit = lastvisit;
-        this.futurevisit = futurevisit;
     }
+
+
 
     public Client(){ }
 
@@ -78,4 +80,5 @@ public class Client {
     public void setFuturevisit(LocalDate futurevisit) {
         this.futurevisit = futurevisit;
     }
+
 }

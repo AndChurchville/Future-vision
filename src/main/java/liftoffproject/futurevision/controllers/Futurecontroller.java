@@ -9,10 +9,12 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLOutput;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("future")
-public class HelloFuture {
+public class Futurecontroller {
 
     @Autowired
     private ClientDao clientDao;
@@ -31,13 +33,20 @@ public class HelloFuture {
         model.addAttribute(new Client());
         return "future/add";
     }
+
     @RequestMapping(value="add", method = RequestMethod.POST)
     public String processAddClientForm(@ModelAttribute @Valid Client newClient,
-                                       Errors errors, Model model){
+                                       Errors errors, Model model ){
+        //set the futurevisit property0
+
+        LocalDate date = newClient.getLastvisit();
+        newClient.setFuturevisit(date.plusDays(90));
+
         clientDao.save(newClient);
         return "redirect:";
 
     }
+
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemoveClientForm(Model model){
@@ -46,10 +55,10 @@ public class HelloFuture {
         return "future/remove";
     }
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveClientForm(@RequestParam int[] clientIds){
+    public String processRemoveClientForm(@RequestParam int[] clientId){
 
-        for (int clientId : clientIds){
-            clientDao.deleteById(clientId);
+        for (int client : clientId){
+            clientDao.deleteById(client);
         }
 
         return "redirect:";

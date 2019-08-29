@@ -8,7 +8,6 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<p th:unless="${client} and ${client.size()}">No Clients Yet :(</p>
 
 
 
@@ -18,12 +17,15 @@
         <th>Last Name</th>
         <th>Last Visit</th>
         <th>Future Visit</th>
+
     </tr>
 
     <tr th:each="client : ${clients}">
         <td th:text="${client.firstname}"></td>
         <td th:text="${client.lastname}"></td>
         <td th:text="${client.lastvisit}"></td>
+        <td th:text="${client.futurevisit}"></td>
+
     </tr>
 </table>
 

@@ -10,9 +10,10 @@
 
 <form method="post">
     <label th:for="clientId"></label>
+
         <select name="clientId">
             <option th:each="client : *{clients}"
-                    th:text = "${client.firstname}"
+                    th:text = "|${client.firstname}  ${client.lastname}|"
                     th:value = "${client.id}"></option>
         </select>
         <br />
