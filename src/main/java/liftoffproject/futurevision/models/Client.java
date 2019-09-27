@@ -7,7 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -31,8 +32,18 @@ public class Client {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate futurevisit;
 
+    @ManyToOne
+    @JoinColumn
+    private User user;
+
+    @OneToMany
+    @JoinColumn(name = "bookvisits_id")
+    private List <Bookvisits> bookvisits = new ArrayList<>();
 
 
+
+
+    public Client(){ }
 
 
     public Client(String firstname, String lastname, LocalDate lastvisit) {
@@ -40,10 +51,6 @@ public class Client {
         this.lastname = lastname;
         this.lastvisit = lastvisit;
     }
-
-
-
-    public Client(){ }
 
     public int getId() {
         return id;

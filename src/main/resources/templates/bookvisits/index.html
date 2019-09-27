@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+
+<body class="container">
+
+<header class="header-bg">
+    <h1 th:text="${title}">Default Title</h1>
+    <nav th:replace="fragments :: navigation"></nav>
+</header>
+
+<form method="post" th:object="${client}" action="/bookvisitt">
+    <label th:for="clientId"> Select a Client:</label>
+    <select name="clientId">
+        <option th:each="client : *{clients}"
+                th:text="${client.firstname}"
+                th:value="${client.id}"></option>
+    </select>
+
+    <input type="hidden" name="bookvisitId" th:value="*{bookvisit.id}">
+    <input type="submit" value="Submit" />
+
+</form>
+
+
+</body>
+</html>

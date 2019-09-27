@@ -8,16 +8,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import java.sql.SQLOutput;
+import javax.xml.crypto.dsig.Reference;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("future")
-public class Futurecontroller {
+public class clientcontroller {
 
     @Autowired
     private ClientDao clientDao;
+
 
     @RequestMapping(value="")
     public String index(Model model){
@@ -27,6 +30,7 @@ public class Futurecontroller {
         return "future/index";
     }
 
+    //adds client to database
     @RequestMapping(value="add", method = RequestMethod.GET)
     public String displayAddClientForm(Model model){
         model.addAttribute("title", "Add Client");
@@ -37,8 +41,8 @@ public class Futurecontroller {
     @RequestMapping(value="add", method = RequestMethod.POST)
     public String processAddClientForm(@ModelAttribute @Valid Client newClient,
                                        Errors errors, Model model ){
-        //set the futurevisit property0
 
+        //sets the future visit property
         LocalDate date = newClient.getLastvisit();
         newClient.setFuturevisit(date.plusDays(90));
 
@@ -46,8 +50,7 @@ public class Futurecontroller {
         return "redirect:";
 
     }
-
-
+    //removes client from database
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemoveClientForm(Model model){
         model.addAttribute("clients", clientDao.findAll());
@@ -64,4 +67,17 @@ public class Futurecontroller {
         return "redirect:";
     }
 
+    //individual client page
+    @RequestMapping(value = "client-page/{clientId}", method = RequestMethod.GET)
+    public String clientpage(Model model, @PathVariable int clientId){
+
+        Optional<Client> optionalClient = clientDao.findById(clientId);
+        Client client = optionalClient.get();
+
+
+      model.addAttribute("title", "Client Page");
+      model.addAttribute("client", client);
+
+      return "future/client-page";
+    }
 }

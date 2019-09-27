@@ -4,32 +4,33 @@
 
 <body class="container">
 
-<h1 th:text="${title}">Default Title</h1>
-
-<nav th:replace="fragments :: navigation"></nav>
-
+<header class="header-bg">
+    <h1 th:text="${title}">Default Title</h1>
+    <nav th:replace="fragments :: navigation"></nav>
+</header>
 
 
 
 <table class="table">
     <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
+        <th>Clients</th>
         <th>Last Visit</th>
         <th>Future Visit</th>
 
     </tr>
 
     <tr th:each="client : ${clients}">
-        <td th:text="${client.firstname}"></td>
-        <td th:text="${client.lastname}"></td>
+        <td>
+            <a th:href="'/future/client-page/' + ${client.id}" th:text="|${client.firstname}  ${client.lastname}|"></a>
+        </td>
         <td th:text="${client.lastvisit}"></td>
         <td th:text="${client.futurevisit}"></td>
 
     </tr>
 </table>
-
+<nav class="add-remove">
 <a href="/future/add">Add Clients</a> |
 <a href="/future/remove">Remove Clients</a>
+</nav>
 </body>
 </html>
